@@ -11,7 +11,7 @@ const layout = ({children} : {children : ReactNode}) => {
       <footer className='flex items-center justify-between p-2'>
            <div className='flex gap-1 items-center'>
                 <IconInnerShadowTop className="!size-6" />
-                <span className="text-2xl font-semibold">Flo</span>
+                <span className="text-2xl font-semibold">Flow</span>
               </div>
           <ModeToggle/>
       </footer>

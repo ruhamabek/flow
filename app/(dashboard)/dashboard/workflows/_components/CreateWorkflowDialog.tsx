@@ -101,7 +101,7 @@ function CreateWorkflowDialog({ triggerText }: { triggerText?: string }) {
                       </p>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="eg. Flo" {...field} />
+                      <Input placeholder="eg. Flow" {...field} />
                     </FormControl>
                     <FormDescription>Choose a Desciptive name</FormDescription>
                     <FormMessage />

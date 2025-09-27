@@ -77,7 +77,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-6" />
-                <span className="text-2xl font-semibold">Flo</span>
+                <span className="text-2xl font-semibold">Flow</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

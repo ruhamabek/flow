@@ -22,6 +22,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import UserAvailableCreditsBadge from "./UserAvailableCreditsBadge";
 
 interface NavMainProps extends React.HTMLAttributes<HTMLDivElement> {
   items: {
@@ -42,7 +43,7 @@ export function NavMain({ className, items, ...props }: NavMainProps) {
   return (
     <div className={cn("px-2", className)} {...props}>
       <SidebarGroup>
-        <SidebarGroupLabel>Main</SidebarGroupLabel>
+         <UserAvailableCreditsBadge />
         <SidebarGroupContent>
           <SidebarMenu>
             {items.map((item) => {

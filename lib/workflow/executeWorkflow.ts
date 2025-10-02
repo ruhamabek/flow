@@ -47,8 +47,7 @@ export async function ExecuteWorkflow(executionId: string) {
         await finalizeWorkflowExecution(executionId, execution.workflowId ,executionFailed, creditsConsumed);
         
         await cleanupEnviroment(enviroment);
-       revalidatePath("/workflow/runs");
-}
+ }
 
 async function initializeWorkflowExecution(executionId: string, workflowId: string){
     await prisma.workflowExecution.update({ 

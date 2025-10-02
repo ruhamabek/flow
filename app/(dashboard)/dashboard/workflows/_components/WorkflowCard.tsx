@@ -23,6 +23,7 @@ import React, { useState } from "react";
 import { MoreVertical } from "lucide-react";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import DeleteWorkflowsDialog from "./DeleteWorkflowsDialog";
+import RunBtn from "./RunBtn";
 
 const statusColors = {
   [WorkflowStatus.DRAFT]: "bg-secondary text-white",
@@ -39,18 +40,19 @@ const WorkflowCard = ({ workflow }: { workflow: Workflow }) => {
     >
       <CardContent className="p-4 flex items-center justify-between h-[100px]">
         <div className="flex items-center justify-end space-x-3">
-          <div
-            className={cn(
-              "w-10 h-10 rounded-full flex items-center bg-white text-black justify-center",
-              statusColors[workflow.status as WorkflowStatus]
-            )}
-          >
-            {isDraft ? (
-              <IconFile className="h-5 w-5" />
-            ) : (
-              <IconPlayerPlay className="h-5 w-5 text-white" />
-            )}
-          </div>
+      <div
+    className={cn(
+      "w-10 h-10 rounded-full flex items-center justify-center",
+      statusColors[workflow.status as WorkflowStatus]
+    )}
+  >
+    {isDraft ? (
+      <IconFile className="h-5 w-5 text-black dark:text-white" />
+    ) : (
+      <IconPlayerPlay className="h-5 w-5 text-white dark:text-gray-900" />
+    )}
+  </div>
+
           <div>
             <h3 className="text-base font-bold text-muted-foreground flex items-center">
               <Link
@@ -60,7 +62,7 @@ const WorkflowCard = ({ workflow }: { workflow: Workflow }) => {
                 {workflow.name}
               </Link>
               {isDraft && (
-                <span className="ml-2 px-2 py-0.5 text-sm font-medium bg-white text-black rounded-full">
+                <span className="ml-2 px-2 py-0.5 text-sm font-medium bg-black dark:bg-white dark:text-black  text-white  rounded-full">
                   Draft
                 </span>
               )}
@@ -68,6 +70,7 @@ const WorkflowCard = ({ workflow }: { workflow: Workflow }) => {
           </div>
         </div>
         <div className="flex items-center space-x-2">
+          {!isDraft && <RunBtn workflowId={workflow.id}/>}
           <Link
             href={`/workflow/editor/${workflow.id}`}
             className={cn(

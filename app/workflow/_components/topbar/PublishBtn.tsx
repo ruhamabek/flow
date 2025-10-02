@@ -1,28 +1,28 @@
 "use client";
 
-import { RunWorkflow } from '@/actions/workflows/runWorkflow';
+import { PublishWorkflow } from '@/actions/workflows/publishWorkflow';
 import useExecutionPlan from '@/components/hooks/useExecutionPlan';
 import { Button } from '@/components/ui/button';
 import { useMutation } from '@tanstack/react-query';
 import { useReactFlow } from '@xyflow/react';
-import { PlayIcon } from 'lucide-react';
+import { UploadIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
- import React from 'react'
+import React from 'react'
 import { toast } from 'sonner';
 
-const ExecuteBtn = ({workflowId}: {workflowId: string}) => {
+const PublishBtn = ({workflowId}: {workflowId: string}) => {
   const generate = useExecutionPlan();
   const {toObject} = useReactFlow();
    const router = useRouter(); 
 
   const mutation = useMutation({
-    mutationFn: RunWorkflow,
+    mutationFn: PublishWorkflow,
     onSuccess: (data) => {
-      toast.success("Workflow execution started" , {id: "flow-execution"});
-      router.push(`/workflow/runs/${data.workflowId}/${data.executionId}`);
+      toast.success("Workflow published" , {id: workflowId});
+      router.push(`/workflow/editor/${data.workflowId}`);
     },
     onError: () => {
-      toast.error("Something went wrong" , {id: "flow-execution"});
+      toast.error("Something went wrong" , {id: workflowId});
     },
   })
 
@@ -36,17 +36,18 @@ const ExecuteBtn = ({workflowId}: {workflowId: string}) => {
         return;
       }
 
+      toast.loading("Publishing workflow..." , {id: workflowId});
+
       mutation.mutate({
-        workflowId: workflowId,
+        id: workflowId,
         flowDefinition: JSON.stringify(toObject()),
       })
-      console.log("====plan====");
-      console.table(plan);
+      
     }}>
-        <PlayIcon size={16} className='dark:stroke-white stroke-black'/>
-        Execute
+        <UploadIcon size={16} className='dark:stroke-white stroke-black'/>
+        Publish
     </Button>
   )
 }
 
-export default ExecuteBtn
+export default PublishBtn

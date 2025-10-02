@@ -83,7 +83,10 @@ model Workflow {
   name        String
   description String
   definition  String
-  status      String
+
+  executionPlan  String?
+  creditscost    Int?     @default(0)
+  status         String
 
   lastRunAt     DateTime?
   lastRunId     String?

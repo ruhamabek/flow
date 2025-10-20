@@ -14,8 +14,7 @@ import { cn } from "@/lib/utils";
 import {
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
+   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,

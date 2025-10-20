@@ -86,11 +86,13 @@ model Workflow {
 
   executionPlan  String?
   creditscost    Int?     @default(0)
+  cron           String?
   status         String
 
   lastRunAt     DateTime?
   lastRunId     String?
   lastRunStatus String?
+  nextRunAt     DateTime?
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

@@ -9,10 +9,10 @@ import React, { useEffect, useId, useState } from 'react'
 const StringParam = ({param , value , updateNodeParamValue, disabled}: ParamProps) => {
       const id = useId();
 
-  const [internalValue, setInternalValue] = useState(value);
+  const [internalValue, setInternalValue] = useState(value ?? "");
 
   useEffect(() => {
-    setInternalValue(value);
+    setInternalValue(value ?? "");
   }, [value]);
   
   let Component: any = Input;

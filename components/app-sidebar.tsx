@@ -18,8 +18,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";

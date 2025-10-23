@@ -170,6 +170,7 @@ async function finalizePhase(phaseId: string, success: boolean , outputs: any, l
 async function executePhase(phase: ExecutionPhase, node: AppNode, enviroment: Enviroment, logCollector: LogCollector):Promise<boolean> {
       const runFn = ExecutorRegistry[node.data.type];
       if(!runFn){
+        logCollector.error(`not found executor for ${node.data.type}`)
         return false;
       }
 

@@ -49,7 +49,7 @@ const WorkflowCard = ({ workflow }: { workflow: Workflow }) => {
   return (
     <Card
       className="border border-separate shadow-sm rounded-lg overflow-hidden
-          hover:shadow-md dark:shadow-primary/30"
+          hover:shadow-md dark:shadow-primary/30 group/card"
     >
       <CardContent className="p-4 flex items-center justify-between h-[100px]">
         <div className="flex items-center justify-end space-x-3">
@@ -68,12 +68,14 @@ const WorkflowCard = ({ workflow }: { workflow: Workflow }) => {
 
           <div>
             <h3 className="text-base font-bold text-muted-foreground flex items-center">
-              <Link
+              <TooltipWrapper content={workflow.description}>
+                     <Link
                 href={`/workflow/editor/${workflow.id}`}
                 className="flex items-center hover:underline"
               >
                 {workflow.name}
               </Link>
+              </TooltipWrapper>       
               {isDraft && (
                 <span className="ml-2 px-2 py-0.5 text-sm font-medium bg-black dark:bg-white dark:text-black text-white rounded-full">
                   Draft

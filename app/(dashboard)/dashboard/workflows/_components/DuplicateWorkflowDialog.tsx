@@ -28,10 +28,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation } from "@tanstack/react-query";
  import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { CopyIcon, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CustomDialogHeader from "@/components/CustomDialogHeader";
 import { DuplicateWorkflow } from "@/actions/workflows/duplicateWorkflow";
+import { cn } from "@/lib/utils";
 
 function DuplicateWorkflowDialog({ workflowId }: { workflowId?: string }) {
   const [open, setOpen] = useState(false);
@@ -60,7 +61,7 @@ function DuplicateWorkflowDialog({ workflowId }: { workflowId?: string }) {
 
   const onSubmit = useCallback(
     (values: duplicateWorkflowtype) => {
-      toast.loading("duplicating workflow...", { id: "duplicate-workflow" });
+      toast.loading("Duplicating workflow...", { id: "duplicate-workflow" });
       mutate(values);
     },
     [mutate]
@@ -75,7 +76,14 @@ function DuplicateWorkflowDialog({ workflowId }: { workflowId?: string }) {
       }}
     >
       <DialogTrigger asChild>
-        <Button>{"Duplicate workflow"}</Button>
+        <Button 
+            variant={"ghost"}
+            size={"icon"}
+            className={cn(
+              "ml-2 transition-opacity duration-200 opacity-0 group-hover/card:opacity-100 cursor-pointer"
+            )}>
+          <CopyIcon className="w-4 h-4 text-muted-foreground cursor-pointer"/>
+        </Button>
       </DialogTrigger>
       <DialogContent className="px-0">
         <CustomDialogHeader

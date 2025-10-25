@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/genai": "^1.27.0",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.16.2",
     "@radix-ui/react-accordion": "^1.2.12",

@@ -1,6 +1,7 @@
 import crypto from "crypto"
+import "server-only";
 
-const ALG = "aes_256-cbc";
+const ALG = "aes-256-cbc";
 
 export const symmetricEncrypt = (data: string) => {
     const key = process.env.ENCRYPTION_KEY;

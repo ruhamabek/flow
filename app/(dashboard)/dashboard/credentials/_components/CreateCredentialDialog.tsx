@@ -40,6 +40,7 @@ function CreateCredentialDialog({ triggerText }: { triggerText?: string }) {
     mutationFn: CreateCredential,
     onSuccess: () => {
       toast.success("Credential Created.", { id: "create-credential" });
+      form.reset();
       setOpen(false);
      },
     onError: (error) => {
@@ -60,10 +61,7 @@ function CreateCredentialDialog({ triggerText }: { triggerText?: string }) {
   return (
     <Dialog
       open={open}
-      onOpenChange={(open) => {
-        form.reset();
-        setOpen(open);
-      }}
+      onOpenChange={setOpen}
     >
       <DialogTrigger asChild>
         <Button>{triggerText ?? "Create"}</Button>
@@ -91,7 +89,7 @@ function CreateCredentialDialog({ triggerText }: { triggerText?: string }) {
                       </p>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="eg. Flow" {...field} />
+                      <Input placeholder="eg. OpenAI" {...field} />
                     </FormControl>
                     <FormDescription>
                       Enter a unque and descriptive name for the credential
@@ -108,20 +106,18 @@ function CreateCredentialDialog({ triggerText }: { triggerText?: string }) {
                     <FormLabel>
                       Value
                       <p className="text-xs text-muted-foreground">
-                        (optional)
+                        (required)
                       </p>
                     </FormLabel>
                     <FormControl>
                       <Textarea
                         className="resize-none"
-                        placeholder="eg. scrape shoe prices..."
-                        {...field}
+                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
                        Enter the value associated with this credential
-                       <br/> This value will be securely encrypted and stored
-                    </FormDescription>
+                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

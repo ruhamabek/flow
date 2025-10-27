@@ -9,6 +9,9 @@ import { WaitForElement } from "./WaitForElement"
 import { DeliverViaWebhook } from "./DeliverViaWebhook"
 import { ExtractDataWithAI } from "./ExtractDataWithAI"
 import { ReadPropertyFromJson } from "./ReadPropertyFromJson"
+import { AddPropertyToJson } from "./AddPropertyToJson"
+import { NavigateUrl } from "./NavigateUrl"
+import { ScrollElement } from "./ScrollElement"
 
 type Registry = {
     [K in TaskType]: WorkflowTask & {type: K};
@@ -24,6 +27,10 @@ const TaskRegistry: Registry = {
     DELIVER_VIA_WEBHOOK: DeliverViaWebhook,
     EXTRACT_DATA_WITH_AI : ExtractDataWithAI,
     READ_PROPERTY_FROM_JSON: ReadPropertyFromJson,
+    ADD_PROPERTY_TO_JSON: AddPropertyToJson,
+    NAVIGATE_URL: NavigateUrl,
+    SCROLL_ELEMENT: ScrollElement,
+
 }
 
 export default TaskRegistry

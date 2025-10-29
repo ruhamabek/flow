@@ -12,7 +12,7 @@ const polarClient = new Polar({
     // Use 'sandbox' if you're using the Polar Sandbox environment
     // Remember that access tokens, products, etc. are completely separated between environments.
     // Access tokens obtained in Production are for instance not usable in the Sandbox environment.
-    // server: 'sandbox'
+     server: 'sandbox'
 }); 
 
 export const auth = betterAuth({ 
@@ -35,30 +35,37 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   plugins: [
-        polar({ 
-            client: polarClient, 
-            createCustomerOnSignUp: true, 
-            use: [ 
-                checkout({ 
-                    products: [ 
-                        { 
-                            productId: "324905f4-9c29-498c-b4cc-e9c81491d167", // ID of Product from Polar Dashboard
-                            slug: "10000-credits" // Custom slug for easy reference in Checkout URL, e.g. /checkout/pro
-                        } ,
-                        { 
-                            productId: "993cdaee-f3d7-49c7-ba96-26247310ec5a", // ID of Product from Polar Dashboard
-                            slug: "5000-credits" // Custom slug for easy reference in Checkout URL, e.g. /checkout/pro
-                        } ,
-                        { 
-                            productId: "33e6841b9-7701-4982-b825-d34670c5e59d", // ID of Product from Polar Dashboard
-                            slug: "1000-credits" // Custom slug for easy reference in Checkout URL, e.g. /checkout/pro
-                        } ,
-                    ], 
-                    successUrl: "/success?checkout_id={CHECKOUT_ID}", 
-                    authenticatedUsersOnly: true
-                }), 
-                portal()
-            ], 
-        }) 
-    ]
-});
+polar({
+  client: polarClient,
+  createCustomerOnSignUp: true,
+  use: [
+    checkout({
+      products: [
+                        {
+                            productId: "280ce939-1fb5-4c35-9871-a70e31e390d2",
+                            slug: "Large-Pack" // Custom slug for easy reference in Checkout URL, e.g. /checkout/Large-Pack
+                        },
+                       {
+                            productId: "7d85e7a7-6857-4061-8526-5262460e2a5c",
+                            slug: "Medium-Pack" // Custom slug for easy reference in Checkout URL, e.g. /checkout/Medium-Pack
+                        },
+                        {
+                            productId: "2a435417-6ee1-43a5-b1d0-58dc1c192fe6",
+                            slug: "Small-Pack" // Custom slug for easy reference in Checkout URL, e.g. /checkout/Small-Pack
+                        }
+                    ],
+      successUrl: "/success?checkout_id={CHECKOUT_ID}",
+      returnUrl: "http://localhost:3000/dashboard/billing",
+      authenticatedUsersOnly: true,
+    }),
+           webhooks({
+               secret: process.env.POLAR_WEBHOOK_SECRET!,
+               onPayload: async (payload) => {
+                      console.log("Received webhook payload:", payload.type);
+                   },
+                })
+            ],
+        })
+  ],
+})
+

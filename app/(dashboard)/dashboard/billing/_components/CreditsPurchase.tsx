@@ -17,48 +17,40 @@ import { CoinsIcon, CreditCard } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-const CreditsPurchase = () => {
+const CreditsPurchase =  () => {
   const [selectedPack, setSelectedPack] = useState(PackId.MEDIUM);
   const [isLoading, setIsLoading] = useState(false);
-
-   const slugMap: Record<PackId, string> = {
-    [PackId.LARGE]: "324905f4-9c29-498c-b4cc-e9c81491d167",
-    [PackId.MEDIUM]: "993cdaee-f3d7-49c7-ba96-26247310ec5a",
-    [PackId.SMALL]: "33e6841b9-7701-4982-b825-d34670c5e59d",
-  };
-
-  const handlePurchase = async () => {
-    try {
-      setIsLoading(true);
-      const slug = slugMap[selectedPack];
+   const handlePurchase = async () => {
+    setIsLoading(true); 
+    try { 
+      const slugMap: Record<PackId, string> = {
+        [PackId.LARGE]: "Large-Pack",
+        [PackId.MEDIUM]: "Medium-Pack", 
+        [PackId.SMALL]: "Small-Pack",
+      };
+      const slug = slugMap[selectedPack];  
+      if (!slug) {
+        toast.error("Invalid slug selection");
+        setIsLoading(false);
+        return;
+      }
 
       const checkout = await authClient.checkout({
-        products: slug,  
+        slug: slug,  
       });
 
+      if (checkout && checkout.data?.url) {
+        console.log("Checkout response:", checkout);
+        toast.success("Redirecting to checkout...");
+        window.location.href = checkout.data?.url;
        
-      const redirectUrl =
-         typeof checkout === "object" &&
-        checkout !== null &&
-        "data" in checkout &&
-        checkout.data &&
-        typeof checkout.data === "object" &&
-        "url" in checkout.data
-          ? (checkout.data as { url: string }).url
-          : typeof checkout === "object" && checkout !== null && "url" in checkout
-          ? (checkout as unknown as { url: string }).url
-          : undefined;
 
-      console.log("Checkout response:", checkout);
-
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
       } else {
-        throw new Error("Checkout did not return a redirect URL");
+        throw new Error("No checkout URL received");
       }
     } catch (error) {
-      console.error("Checkout failed", error);
-      toast.error("Checkout failed. Please try again.");
+      console.error("Checkout error:", error);
+      toast.error("Failed to create checkout");
     } finally {
       setIsLoading(false);
     }
@@ -125,6 +117,7 @@ const CreditsPurchase = () => {
         >
           <CreditCard className="mr-2 h-5 w-5" />
           {isLoading ? "Processing..." : "Purchase Credits"}
+          
         </Button>
       </CardFooter>
     </Card>

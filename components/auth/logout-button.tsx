@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { IconLogout } from "@tabler/icons-react";
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -28,7 +29,8 @@ export default function LogoutButton() {
     });
   }
   return (
-    <button onClick={() => handleLogOut()}>
+    <button className="flex gap-3 items-center cursor-pointer" onClick={() => handleLogOut()}>
+      <IconLogout />
       {loading ? "Logging out..." : "Log out"}
     </button>
   );

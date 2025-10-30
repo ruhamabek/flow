@@ -2,7 +2,7 @@ import { GetCredentialsForUser } from '@/actions/credentials/getCredentialsForUs
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { LockKeyhole, LockKeyholeIcon, ShieldIcon, ShieldOffIcon } from 'lucide-react'
+import { LockKeyholeIcon, ShieldIcon, ShieldOffIcon } from 'lucide-react'
 import React, { Suspense } from 'react'
 import CreateCredentialDialog from './_components/CreateCredentialDialog'
 import { formatDistanceToNow } from 'date-fns'
@@ -10,7 +10,7 @@ import DeleteCredentialDialog from './_components/DeleteCredentialDialog'
 
 const CredentialsPage = () => {
   return (
-    <div className='flex flex-1 flex-col h-full'>
+    <div className='flex flex-1 flex-col h-full ml-7'>
       <div className='flex justify-between'>
          <div className='flex flex-col'>
            <h1 className='text-3xl font-bold'>Credentials</h1>

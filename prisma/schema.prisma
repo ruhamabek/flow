@@ -27,6 +27,9 @@ model User {
 
   @@unique([email])
   @@map("user")
+  UserBalanace UserBalanace[]
+  Checkout Checkout[]
+  Transaction Transaction[]
 }
 
 model Session {
@@ -152,6 +155,7 @@ model ExecutionLog{
 model UserBalanace {
   userId  String @id
   credits Int    @default(0)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Credential{
@@ -164,4 +168,38 @@ model Credential{
 
 
    @@unique([userId , name])
+}
+
+model Checkout {
+  id                String   @id @default(cuid())
+  checkoutId        String   @unique
+  userId            String?
+  user              User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  productId         String
+  productName       String
+  amount            Int
+  currency          String
+  status            String
+  paymentProcessor  String?
+  customerEmail     String?
+  customerName      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id            String         @id @default(cuid())
+  checkoutId    String?
+  userId        String
+  amount        Float
+  currency      String         @default("USD")
+  status        String          
+  transactionId String         @unique   
+  createdAt     DateTime       @default(now())
+
+  user          User           @relation(fields: [userId], references: [id])
+  checkout      Checkout?      @relation(fields: [checkoutId], references: [id])
 }

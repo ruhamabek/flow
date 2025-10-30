@@ -3,15 +3,13 @@ import * as React from "react";
 import {  
   IconDashboard,
   IconInnerShadowTop,
-  IconMoneybag,
-  IconCreditCard,
+   IconCreditCard,
   IconShieldCheck,
   IconLayersIntersect
 } from "@tabler/icons-react";
 
  import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
+ import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -48,13 +46,7 @@ const data = {
   ],
 
  
-  navSecondary: [
-    {
-      title: "Upgrade to PRO",
-      url: "/",
-      icon: IconMoneybag,
-    },
-  ],
+ 
   documents: [],
 };
 
@@ -81,8 +73,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       <SidebarContent>
         <NavMain items={data.navMain} />
         {/* <NavDocuments items={data.documents} /> */}
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
-      </SidebarContent>
+       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />
       </SidebarFooter>

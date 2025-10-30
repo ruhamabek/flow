@@ -18,7 +18,7 @@ const polarClient = new Polar({
 export const auth = betterAuth({ 
    emailAndPassword: {
         minPasswordLength: 4,
-		maxPasswordLength: 128,    
+    maxPasswordLength: 128,    
         enabled: true
     } ,
     socialProviders:{
@@ -35,37 +35,150 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   plugins: [
-polar({
-  client: polarClient,
-  createCustomerOnSignUp: true,
-  use: [
-    checkout({
-      products: [
-                        {
-                            productId: "280ce939-1fb5-4c35-9871-a70e31e390d2",
-                            slug: "Large-Pack" // Custom slug for easy reference in Checkout URL, e.g. /checkout/Large-Pack
-                        },
-                       {
-                            productId: "7d85e7a7-6857-4061-8526-5262460e2a5c",
-                            slug: "Medium-Pack" // Custom slug for easy reference in Checkout URL, e.g. /checkout/Medium-Pack
-                        },
-                        {
-                            productId: "2a435417-6ee1-43a5-b1d0-58dc1c192fe6",
-                            slug: "Small-Pack" // Custom slug for easy reference in Checkout URL, e.g. /checkout/Small-Pack
-                        }
-                    ],
-      successUrl: "/success?checkout_id={CHECKOUT_ID}",
-      returnUrl: "http://localhost:3000/dashboard/billing",
-      authenticatedUsersOnly: true,
-    }),
-           webhooks({
-               secret: process.env.POLAR_WEBHOOK_SECRET!,
-               onPayload: async (payload) => {
-                      console.log("Received webhook payload:", payload.type);
-                   },
-                })
-            ],
-        })
-  ],
-})
+    polar({
+      client: polarClient,
+      createCustomerOnSignUp: true,
+      use: [
+        checkout({
+          products: [
+            {
+              productId: process.env.LARGE_PRODUCT_ID!,
+              slug: "Large-Pack"  
+            },
+            {
+              productId: process.env.MEDIUM_PRODUCT_ID!,
+              slug: "Medium-Pack"   
+            },
+            {
+              productId: process.env.SMALL_PRODUCT_ID!,
+              slug: "Small-Pack"    
+            }
+          ],
+          successUrl: "/success?checkout_id={CHECKOUT_ID}",
+          returnUrl: "http://localhost:3000/dashboard/billing",
+          authenticatedUsersOnly: true,
+        }),
+webhooks({
+  secret: process.env.POLAR_WEBHOOK_SECRET!,
+  onPayload: async (payload) => {
+    console.log("Received webhook payload:", payload.type, payload);
 
+     if (["checkout.created", "checkout.updated"].includes(payload.type)) {
+      await handleCheckoutWebhook(payload.data);
+    }
+  },
+}),
+
+      ],
+    }),
+  ],
+});
+
+async function handleCheckoutWebhook(checkoutData: any) {
+  try {
+    console.log("Processing checkout:", checkoutData.id, checkoutData.status);
+
+    if (!checkoutData.customerEmail) {
+      console.warn("No customer email in checkout data");
+      return;
+    }
+
+     const user = await prisma.user.findFirst({
+      where: { email: checkoutData.customerEmail },
+    });
+
+    if (!user) {
+      console.warn(`User not found for email: ${checkoutData.customerEmail}`);
+      return;
+    }
+
+     const savedCheckout = await prisma.checkout.upsert({
+      where: { checkoutId: checkoutData.id },
+      create: {
+        checkoutId: checkoutData.id,
+        userId: user.id,
+        productId: checkoutData.productId,
+        productName: checkoutData.product?.name ?? null,
+        amount: checkoutData.totalAmount,
+        currency: checkoutData.currency,
+        status: checkoutData.status,
+        paymentProcessor: checkoutData.paymentProcessor,
+        customerEmail: checkoutData.customerEmail,
+        customerName: checkoutData.customerName,
+      },
+      update: {
+        status: checkoutData.status,
+        amount: checkoutData.totalAmount,
+        productName: checkoutData.product?.name ?? undefined,
+      },
+    });
+
+    console.log(`Checkout ${savedCheckout.id} processed for user ${user.id}`);
+
+     if (checkoutData.status === "completed" || checkoutData.status === "succeeded") {
+      await handleTransactionCreation(user.id, savedCheckout, checkoutData);
+    }
+
+  } catch (error) {
+    console.error("Error processing webhook:", error);
+  }
+}
+
+async function handleTransactionCreation(userId: string, checkout: any, checkoutData: any) {
+  try {
+     const uniqueTransactionId = `${checkoutData.id}-${Date.now()}`;
+
+     const transaction = await prisma.transaction.create({
+      data: {
+        checkoutId: checkout.id,
+        userId: userId,
+        amount: checkoutData.totalAmount,
+        currency: checkoutData.currency,
+        status: "success",
+        transactionId: uniqueTransactionId,
+      },
+    });
+
+    console.log(`✅ Transaction ${transaction.id} created for user ${userId}`);
+
+    // Add credits
+    await handleCreditAddition(userId, checkoutData);
+  } catch (error) {
+    console.error("❌ Error creating transaction:", error);
+  }
+}
+
+
+async function handleCreditAddition(userId: string, checkoutData: any) {
+  try {
+    let creditsToAdd = 0;
+    const productName = checkoutData.product?.name;
+
+    switch (productName) {
+      case "Large Pack":
+        creditsToAdd = 10000;
+        break;
+      case "Medium Pack":
+        creditsToAdd = 5000;
+        break;
+      case "Small Pack":
+        creditsToAdd = 1000;
+        break;
+      default:
+        console.warn(`Unknown product: ${productName}`);
+        return;
+    }
+
+    if (creditsToAdd > 0) {
+      await prisma.userBalanace.upsert({
+        where: { userId: userId },
+        create: { userId: userId, credits: creditsToAdd },
+        update: { credits: { increment: creditsToAdd } },
+      });
+
+      console.log(`Added ${creditsToAdd} credits to user ${userId}`);
+    }
+  } catch (error) {
+    console.error("Error adding credits:", error);
+  }
+}

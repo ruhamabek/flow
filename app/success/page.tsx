@@ -1,25 +1,15 @@
-"use client";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { authClient } from "@/lib/auth-client";
+import { Suspense } from "react"
+import { CheckoutSuccessContent } from "./_components/CheckoutSuccessContent"
+ 
+export const metadata = {
+  title: "Payment Successful",
+  description: "Your payment has been processed successfully",
+}
 
 export default function SuccessPage() {
-  const searchParams = useSearchParams();
-  const checkoutId = searchParams.get("checkout_id");
-
-  useEffect(() => {
-    if (checkoutId) {
-      // Optionally confirm checkout, fetch details
-      authClient.checkout({ referenceId: checkoutId })
-        .then((res) => console.log("Checkout confirmed:", res))
-        .catch(console.error);
-    }
-  }, [checkoutId]);
-
   return (
-    <div className="p-10 text-center">
-      <h1 className="text-2xl font-bold">Payment Successful 🎉</h1>
-      <p className="mt-2">Checkout ID: {checkoutId}</p>
-    </div>
-  );
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <CheckoutSuccessContent />
+    </Suspense>
+  )
 }

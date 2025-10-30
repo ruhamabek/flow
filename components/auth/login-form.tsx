@@ -170,7 +170,6 @@ export function LoginForm({
                     },
                     onSuccess: (ctx) => {
                       toast.success("Authentication Redirecting...");
-                      router.push("/setup");
                     },
                     onError: (ctx) => {
                       setError(ctx.error.message);

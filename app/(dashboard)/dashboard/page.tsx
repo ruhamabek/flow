@@ -23,7 +23,7 @@ export default async function Page({
   };
 
   return (
-    <div className="flex flex-1 flex-col h-full">
+    <div className="flex flex-1 flex-col h-full ml-7">
       <div className="flex justify-between">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <Suspense fallback={<Skeleton className="w-[180px] h-[40px]" />}>

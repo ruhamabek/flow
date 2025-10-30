@@ -7,6 +7,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Shield, Layout, ArrowUpRight } from "lucide-react";
  import LogoutButton from "@/components/auth/logout-button-icon";
 import HeroSection from "./_components/hero";
+import { IconInnerShadowTop } from "@tabler/icons-react";
 export default async function page() {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -16,9 +17,17 @@ export default async function page() {
       <header className="relative z-20 border-b">
         <div className="container  flex h-16 items-center justify-between">
           <div className="flex items-center ">
-            <span className="font-bold text-xl">Better Auth Starter</span>
+            <span className="font-bold text-xl">
+                 <button
+        type="button"
+        className="flex ml-4  items-center gap-2 cursor-pointer"
+        >
+        <IconInnerShadowTop className="!size-8" />
+        <span className="text-3xl  font-semibold">Flow</span>
+    </button>
+            </span>
           </div>
-          <nav className="flex items-center gap-6">
+          <nav className="flex  items-center gap-6">
             <div className="flex items-center gap-2">
               <ModeToggle />
               {session?.user ? (
@@ -52,38 +61,7 @@ export default async function page() {
         </div>
       </header>
       <HeroSection />
-      <footer className="fixed border bottom-0 w-full z-10 border-t flex border-zinc-200 dark:border-zinc-800 py-6 md:bg-black/5 md:dark:bg-black/80 backdrop-blur-sm">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
-          <div className="flex items-center mb-4 md:mb-0">
-            <Shield className="h-5 w-5 mr-2" />
-            <span className="text-sm font-medium">Auth Starter</span>
-          </div>
-          <div className="flex items-center space-x-6">
-            <Link
-              href="https://github.com/better-auth/better-auth"
-              className="text-sm flex gap-2 items-center text-zinc-700 dark:text-zinc-400 dark:hover:text-white"
-            >
-              Github <ArrowUpRight className="w-3 h-3" />
-            </Link>
-            <Link
-              className="text-sm flex gap-2 items-center text-zinc-700 dark:text-zinc-400 dark:hover:text-white"
-              href="https://better-auth.com/docs"
-            >
-              Docs <ArrowUpRight className="w-3 h-3" />
-            </Link>
-            <Link
-              className="text-sm flex gap-2 items-center text-zinc-700 dark:text-zinc-400 dark:hover:text-white"
-              href="https://www.better-auth.com/docs/examples"
-            >
-              Examples
-              <ArrowUpRight className="w-3 h-3" />
-            </Link>
-          </div>
-          <div className="text-sm text-zinc-500 mt-4 md:mt-0">
-            Better Auth Starter
-          </div>
-        </div>
-      </footer>
+
     </div>
   );
 }

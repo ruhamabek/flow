@@ -9,7 +9,7 @@ import WorkflowCard from './_components/WorkflowCard';
 
 const page = () => {
   return (
-    <div className='flex-1 flex flex-col h-full'>
+    <div className='flex-1 flex flex-col h-full ml-7'>
       <div className='flex justify-between'>
         <div className='flex flex-col'>
           <h1 className='text-3xl font-bold'>Workflows</h1>

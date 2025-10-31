@@ -1,10 +1,11 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "@prisma/client";
-import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth"; 
+import { polar, checkout, webhooks } from "@polar-sh/better-auth"; 
 import { Polar } from "@polar-sh/sdk"; 
 
 const prisma = new PrismaClient();
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 
 const polarClient = new Polar({ 
@@ -61,8 +62,7 @@ export const auth = betterAuth({
 webhooks({
   secret: process.env.POLAR_WEBHOOK_SECRET!,
   onPayload: async (payload) => {
-    console.log("Received webhook payload:", payload.type, payload);
-
+ 
      if (["checkout.created", "checkout.updated"].includes(payload.type)) {
       await handleCheckoutWebhook(payload.data);
     }
@@ -74,10 +74,11 @@ webhooks({
   ],
 });
 
+ 
+
 async function handleCheckoutWebhook(checkoutData: any) {
   try {
-    console.log("Processing checkout:", checkoutData.id, checkoutData.status);
-
+ 
     if (!checkoutData.customerEmail) {
       console.warn("No customer email in checkout data");
       return;
@@ -123,12 +124,13 @@ async function handleCheckoutWebhook(checkoutData: any) {
     console.error("Error processing webhook:", error);
   }
 }
+ 
 
 async function handleTransactionCreation(userId: string, checkout: any, checkoutData: any) {
   try {
      const uniqueTransactionId = `${checkoutData.id}-${Date.now()}`;
 
-     const transaction = await prisma.transaction.create({
+       await prisma.transaction.create({
       data: {
         checkoutId: checkout.id,
         userId: userId,
@@ -139,15 +141,14 @@ async function handleTransactionCreation(userId: string, checkout: any, checkout
       },
     });
 
-    console.log(`✅ Transaction ${transaction.id} created for user ${userId}`);
-
-    // Add credits
-    await handleCreditAddition(userId, checkoutData);
+ 
+     await handleCreditAddition(userId, checkoutData);
   } catch (error) {
     console.error("❌ Error creating transaction:", error);
   }
 }
 
+ 
 
 async function handleCreditAddition(userId: string, checkoutData: any) {
   try {
@@ -176,8 +177,7 @@ async function handleCreditAddition(userId: string, checkoutData: any) {
         update: { credits: { increment: creditsToAdd } },
       });
 
-      console.log(`Added ${creditsToAdd} credits to user ${userId}`);
-    }
+     }
   } catch (error) {
     console.error("Error adding credits:", error);
   }

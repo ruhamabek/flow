@@ -1,7 +1,6 @@
 import "server-only"
 import prisma from "../prisma"
-import { revalidatePath } from "next/cache";
-import { ExecutionPhaseStatus, WorkflowExecutionStatus } from "../../app/types/workflow";
+ import { ExecutionPhaseStatus, WorkflowExecutionStatus } from "../../app/types/workflow";
  import { ExecutionPhase } from "@prisma/client";
 import { AppNode } from "../../app/types/appNode";
 import TaskRegistry from "./task/registry";
@@ -13,6 +12,8 @@ import { Edge } from "@xyflow/react";
 import { LogCollector } from "@/app/types/log";
 import { createLogCollector } from "../log";
 export async function ExecuteWorkflow(executionId: string, nextRunAt?: Date)  {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+
 
        const execution = await prisma.workflowExecution.findUnique({
         where: { id: executionId },
@@ -70,6 +71,7 @@ async function initializeWorkflowExecution(executionId: string, workflowId: stri
         }
     })
 }
+ 
 
 async function initializePhaseStatuses(execution: any) {
       await prisma.executionPhase.updateMany({
@@ -112,7 +114,7 @@ async function finalizeWorkflowExecution(
         lastRunStatus: finalStatus
     },
   })
-   .catch((err) => {
+   .catch(() => {
       
    })
  }
@@ -145,6 +147,7 @@ async function executeWorkflowPhase(phase: ExecutionPhase , enviroment: Envirome
       return { success , creditsCost};
 }   
 
+ 
 async function finalizePhase(phaseId: string, success: boolean , outputs: any, logCollector: LogCollector , creditsCost: number) {
     const finalStatus = success ? ExecutionPhaseStatus.COMPLETED : ExecutionPhaseStatus.FAILED;
     await prisma.executionPhase.update({ 
@@ -173,7 +176,7 @@ async function executePhase(phase: ExecutionPhase, node: AppNode, enviroment: En
         logCollector.error(`not found executor for ${node.data.type}`)
         return false;
       }
-
+ 
       const executionEnviroment: ExecutionEnviroment<any> = createExecutionEnviroment(node , enviroment , logCollector);
 
       return await runFn(executionEnviroment);
@@ -203,6 +206,7 @@ function setupEnviromentForPhase (node: AppNode, enviroment: Enviroment, edges: 
         enviroment.phases[node.id].inputs[input.name] = outputValue;
     }
 }
+ 
 
 function createExecutionEnviroment(node: AppNode , enviroment: Enviroment, logCollector: LogCollector): ExecutionEnviroment<any> {
     return{
@@ -231,7 +235,7 @@ async function decrementCredits(userId: string, amount: number, logCollector: Lo
 
          return true;
 
-    }catch(err){
+    }catch{
         logCollector.error("Insufficient credits");
         return false;
     }

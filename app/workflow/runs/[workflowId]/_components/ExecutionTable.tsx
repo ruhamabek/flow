@@ -6,8 +6,7 @@ import React from 'react'
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
+   TableCell,
   TableHead,
   TableHeader,
   TableRow,

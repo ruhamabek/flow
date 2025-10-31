@@ -19,7 +19,7 @@ import {
    SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { User } from "@prisma/client";
-import { useRouter } from "next/navigation";
+ import Link from "next/link";
 
 const data = {
   navMain: [
@@ -55,8 +55,7 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
-  const router = useRouter();
-  
+   
   if (!user) {
     throw new Error("AppSidebar requires a user but received undefined.");
   }
@@ -64,9 +63,11 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem className="flex items-center gap-1">            
-                <IconInnerShadowTop className="!size-6" />
-                <span className="text-2xl font-semibold">Flow</span>
+          <SidebarMenuItem className="flex items-center gap-1">   
+            <Link href={"/"} className="flex items-center gap-2">
+                 <IconInnerShadowTop className="!size-8" />
+                <span className="text-3xl font-semibold">Flow</span>
+              </Link>                     
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

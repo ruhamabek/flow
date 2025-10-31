@@ -40,8 +40,7 @@ const ExecuteBtn = ({workflowId}: {workflowId: string}) => {
         workflowId: workflowId,
         flowDefinition: JSON.stringify(toObject()),
       })
-      console.log("====plan====");
-      console.table(plan);
+ 
     }}>
         <PlayIcon size={16} className='dark:stroke-white stroke-black'/>
         Execute

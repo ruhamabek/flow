@@ -37,8 +37,8 @@ export function CheckoutSuccessContent() {
         border border-primary/20 rounded-xl  p-8 mb-6 shadow-lg">
           <div className="space-y-2 mb-8">
             <h1 className="text-4xl font-bold text-foreground">Payment Successful</h1>
-            <p className="text-base text-muted-foreground">Your transaction has been completed and confirmed.</p>
-          </div>
+            <p className="text-base text-muted-foreground">Your transaction has been completed and confirmed, check your email for invoice.</p>
+           </div>
 
            {checkoutId && (
             <div className="mb-8 p-6 bg-muted rounded-lg border border-border">

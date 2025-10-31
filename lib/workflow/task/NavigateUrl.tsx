@@ -1,6 +1,6 @@
 import { TaskParamsType, TaskType } from "../../../app/types/task";
 import { WorkflowTask } from "../../../app/types/workflow";
-import { Link2Icon, LucideProps, MousePointerClick, TextIcon } from "lucide-react";
+import { Link2Icon, LucideProps} from "lucide-react";
 
 export const NavigateUrl = {
     type: TaskType.NAVIGATE_URL,

@@ -15,12 +15,12 @@ const NodeComponent = memo((props: NodeProps) => {
         <NodeCard nodeId={props.id} isSelected={props.selected}>
             <NodeHeader nodeId={props.id} taskType={nodeData.type} />
             <NodeInputs>
-                {task.inputs.map((input, index) => (
+                {task.inputs.map((input) => (
                     <NodeInput key={input.name} input={input} nodeId={props.id}/>
                 ))}
             </NodeInputs>
             <NodeOutputs>
-                {task.outputs.map((output, index) => (
+                {task.outputs.map((output) => (
                     <NodeOutput key={output.name} output={output} />
                 ))}
             </NodeOutputs>

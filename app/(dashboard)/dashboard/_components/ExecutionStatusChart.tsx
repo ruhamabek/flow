@@ -4,10 +4,9 @@ import {  GetWorkflowExecutionStatus } from "@/actions/analytics/getWorkflowExec
 import React from "react";
 import {
   Card,
-  CardAction,
-  CardContent,
+   CardContent,
   CardDescription,
-  CardFooter,
+   
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -17,7 +16,7 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  ChartStyle,
+  
 } from "@/components/ui/chart"
 import { Layers2 } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";

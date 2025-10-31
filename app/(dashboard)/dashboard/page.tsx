@@ -13,10 +13,10 @@ import CreditUsageChart from "./billing/_components/CreditUsageChart";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { month?: string; year?: string };
+  searchParams: Promise<{ month?: string; year?: string }>
 }) {
   const currentDate = new Date();
-  const { month, year } = searchParams;
+  const { month, year } = await searchParams;
   const period: Periods = {
     month: month ? parseInt(month) : currentDate.getMonth(),
     year: year ? parseInt(year) : currentDate.getFullYear(),

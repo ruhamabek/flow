@@ -18,8 +18,12 @@ export async function LaunchBrowserExecutor(
           enviroment.log.info(`Opened page at: ${websiteUrl}`)
           return true;
           
-      }catch(error : any){
-          enviroment.log.error(error)
+      } catch (error) {
+          if (error instanceof Error) {
+              enviroment.log.error(error.message);
+          } else {
+              enviroment.log.error(String(error));
+          }
           return false;
       }
 }

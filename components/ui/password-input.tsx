@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const PasswordInput = ({
   ref,
   className,

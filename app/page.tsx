@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
-import { Shield, Layout, ArrowUpRight } from "lucide-react";
+import {   Layout  } from "lucide-react";
  import LogoutButton from "@/components/auth/logout-button-icon";
 import HeroSection from "./_components/hero";
 import { IconInnerShadowTop } from "@tabler/icons-react";

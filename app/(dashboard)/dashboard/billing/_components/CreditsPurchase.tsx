@@ -40,8 +40,7 @@ const CreditsPurchase =  () => {
       });
 
       if (checkout && checkout.data?.url) {
-        console.log("Checkout response:", checkout);
-        toast.success("Redirecting to checkout...");
+         toast.success("Redirecting to checkout...");
         window.location.href = checkout.data?.url;
        
 

@@ -1,15 +1,18 @@
 import { FlowToExecutionPlan, FlowToExecutionPlanValidationError } from "@/lib/workflow/executionPlan";
  import { useReactFlow } from "@xyflow/react"
 import { useCallback } from "react";
-import useflowValidation from "./useFlowValidation";
+import useFlowValidation from "./useFlowValidation";
 import { toast } from "sonner";
 import { AppNode } from "@/app/types/appNode";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 const useExecutionPlan = () =>{
     const {toObject} = useReactFlow();
-    const{ setInvalidInputs , clearErrors}= useflowValidation();
+    const{ setInvalidInputs , clearErrors}= useFlowValidation();
     
-    const handleError = useCallback((error: any) => {
+     const handleError = useCallback((error: any) => {
                switch(error.type){
                     case FlowToExecutionPlanValidationError.NO_ENTRY_POINT:
                        toast.error("No entry point found in the workflow. Please add an entry point.");

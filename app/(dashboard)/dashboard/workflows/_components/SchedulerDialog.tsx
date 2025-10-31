@@ -5,10 +5,8 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+   DialogFooter,
+ 
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { ClockIcon, TriangleAlertIcon } from 'lucide-react';
@@ -59,7 +57,7 @@ const SchedulerDialog = (props : {
               const humanCronStr = cronstrue.toString(cron);
               setValidCron(true);
               setReadableCron(humanCronStr);
-        } catch (error) {
+        } catch   {
               setValidCron(false);
           }
     } , [cron])

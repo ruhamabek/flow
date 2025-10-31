@@ -33,7 +33,7 @@ const FlowEditor = ({workflow} : {workflow: Workflow}) => {
                 const {x = 0, y = 0 , zoom = 1} = flow.viewport;
                 setViewport({x , y , zoom});;
             }
-         }catch(error){
+         }catch {
 
          }
     }, [workflow.definition, setEdges , setNodes , setViewport]);

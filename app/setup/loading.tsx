@@ -1,5 +1,4 @@
-import Logo from "@/components/Logo";
-import { Separator } from "@/components/ui/separator";
+ import { Separator } from "@/components/ui/separator";
 import { IconInnerShadowTop } from "@tabler/icons-react";
 import { Loader2Icon } from "lucide-react";
 

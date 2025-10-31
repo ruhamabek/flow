@@ -2,11 +2,9 @@
 import React from "react";
 import {
   Card,
-  CardAction,
-  CardContent,
+   CardContent,
   CardDescription,
-  CardFooter,
-  CardHeader,
+   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
  import  {
@@ -15,10 +13,10 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  ChartStyle,
+ 
 } from "@/components/ui/chart"
 import { ChartColumnStackedIcon } from "lucide-react";
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import {   Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { GetCreditsUsageInPeriod } from "@/actions/analytics/getCreditsUsageInPeriod";
 
 type ChartData = Awaited<ReturnType<typeof GetCreditsUsageInPeriod>>;

@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:fix": "eslint --cache --cache-location .eslintcache --fix \"{app,components,lib,hooks}/**/*.{ts,tsx,js}\"",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@google/genai": "^1.27.0",

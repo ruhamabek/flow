@@ -22,8 +22,12 @@ export async function WaitForElementExecutor(
             enviroment.log.info(`Element ${selector} became: ${visibility}`)
             return true;
 
-      }catch(error: any){
-          enviroment.log.error(error.message)
+      } catch (error) {
+          if (error instanceof Error) {
+              enviroment.log.error(error.message);
+          } else {
+              enviroment.log.error(String(error));
+          }
           return false;
       }
 }

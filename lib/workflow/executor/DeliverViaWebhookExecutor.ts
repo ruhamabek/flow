@@ -1,6 +1,5 @@
 import {  ExecutionEnviroment } from "@/app/types/executor";
- import { ClickElement } from "../task/ClickElement";
-import { DeliverViaWebhook } from "../task/DeliverViaWebhook";
+ import { DeliverViaWebhook } from "../task/DeliverViaWebhook";
  
 export async function DeliverViaWebhookExecutor(
     enviroment: ExecutionEnviroment<typeof DeliverViaWebhook>,
@@ -32,8 +31,12 @@ export async function DeliverViaWebhookExecutor(
           const responseBody = await response.json();
           enviroment.log.info(JSON.stringify(responseBody , null ,4));
           return true;
-      }catch(error: any){
-          enviroment.log.error(error.message)
+      } catch (error) {
+          if (error instanceof Error) {
+              enviroment.log.error(error.message);
+          } else {
+              enviroment.log.error(String(error));
+          }
           return false;
       }
 }

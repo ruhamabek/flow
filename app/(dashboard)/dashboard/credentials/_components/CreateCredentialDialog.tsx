@@ -24,7 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation } from "@tanstack/react-query";
  import { toast } from "sonner";
-import { Loader2, ShieldEllipsis } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import CustomDialogHeader from "@/components/CustomDialogHeader";
 import { createCredentialSchema, createCredentialType } from "@/app/schema/credential";
 import { CreateCredential } from "@/actions/credentials/createCredential";

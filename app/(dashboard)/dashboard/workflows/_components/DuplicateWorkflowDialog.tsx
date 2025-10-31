@@ -29,15 +29,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { useMutation } from "@tanstack/react-query";
  import { toast } from "sonner";
 import { CopyIcon, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import CustomDialogHeader from "@/components/CustomDialogHeader";
+ import CustomDialogHeader from "@/components/CustomDialogHeader";
 import { DuplicateWorkflow } from "@/actions/workflows/duplicateWorkflow";
 import { cn } from "@/lib/utils";
 
 function DuplicateWorkflowDialog({ workflowId }: { workflowId?: string }) {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
-
+ 
   const form = useForm<duplicateWorkflowtype>({
     resolver: zodResolver(duplicateWorkflowSchema),
     defaultValues: {
@@ -47,7 +45,7 @@ function DuplicateWorkflowDialog({ workflowId }: { workflowId?: string }) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: DuplicateWorkflow,
-    onSuccess: (data) => {
+    onSuccess: ( ) => {
       toast.success("Workflow duplicated.", { id: "duplicate-workflow" });
       setOpen(false);
       // router.push(`/workflow/editor/${data.id}`);

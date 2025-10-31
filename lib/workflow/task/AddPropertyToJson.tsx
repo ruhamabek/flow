@@ -1,6 +1,6 @@
 import { TaskParamsType, TaskType } from "../../../app/types/task";
 import { WorkflowTask } from "../../../app/types/workflow";
-import { DatabaseIcon, FileJsonIcon, LucideProps, MousePointerClick, TextIcon } from "lucide-react";
+import { DatabaseIcon,   LucideProps } from "lucide-react";
 
 export const AddPropertyToJson = {
     type: TaskType.ADD_PROPERTY_TO_JSON,

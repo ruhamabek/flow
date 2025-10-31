@@ -17,10 +17,10 @@ export default function LogoutButton() {
         onSuccess: () => {
           router.push("/");
         },
-        onRequest: (ctx) => {
+        onRequest: ( ) => {
           setLoading(true);
         },
-        onResponse: (ctx) => {
+        onResponse: ( ) => {
           toast.error("Logged out successfully");
           setLoading(false);
         },

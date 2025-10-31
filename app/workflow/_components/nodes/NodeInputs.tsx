@@ -5,7 +5,7 @@ import React from 'react'
 import { ReactNode } from 'react'
 import NodeParamField from './NodeParamField'
 import { ColorForHandle } from './common'
-import useflowValidation from '@/components/hooks/useFlowValidation'
+import useFlowValidation from '@/components/hooks/useFlowValidation'
 const NodeInputs = ({children} :{children: ReactNode}) => {
   return (
     <div className='flex flex-col divide-y gap-2'>
@@ -15,7 +15,7 @@ const NodeInputs = ({children} :{children: ReactNode}) => {
 }
 
 export function NodeInput({input , nodeId} : {input:TaskParam , nodeId: string}){
-  const {invalidInputs} = useflowValidation()
+  const {invalidInputs} = useFlowValidation()
   const edges = useEdges();
   const isConnected = edges.some(
     (edge) => edge.target === nodeId && edge.targetHandle === input.name

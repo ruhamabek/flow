@@ -76,8 +76,12 @@ Ensure the output is valid JSON (no markdown formatting) `,
     enviroment.log.info(`Token usage: ${JSON.stringify(tokenUsage.totalTokens)}`);
  
     return true;
-  } catch (error: any) {
-    enviroment.log.error(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      enviroment.log.error(error.message);
+      return false;
+    }
+ 
     return false;
   }
 }

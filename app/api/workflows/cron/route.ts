@@ -2,7 +2,7 @@ import { WorkflowStatus } from "@/app/types/workflow";
 import { getAppUrl } from "@/lib/helper/appUrl";
 import prisma from "@/lib/prisma";
 
-export async function GET(req : Request) {
+export async function GET( ) {
       const now = new Date();
       const workflows =  await prisma.workflow.findMany({
         select: {id: true},
@@ -22,8 +22,7 @@ export async function GET(req : Request) {
 
 function triggerWorkflow(workflowId: string){
   const triggerApiUrl = getAppUrl(`api/workflows/execute?workflowId=${workflowId}`);
-  console.log("Trigger url" , triggerApiUrl);
-
+ 
   fetch(triggerApiUrl , {
     headers: {
       Authorization: `Bearer ${process.env.API_SECRET}`

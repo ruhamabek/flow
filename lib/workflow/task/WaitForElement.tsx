@@ -1,6 +1,6 @@
 import { TaskParamsType, TaskType } from "../../../app/types/task";
 import { WorkflowTask } from "../../../app/types/workflow";
-import { EyeIcon, LucideProps, MousePointerClick, TextIcon } from "lucide-react";
+import { EyeIcon, LucideProps  } from "lucide-react";
 
 export const WaitForElement = {
     type: TaskType.WAIT_FOR_ELEMENT,

@@ -33,12 +33,7 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     },
     },
-    advanced: {
-           crossSubDomainCookies: {
-      enabled: process.env.NODE_ENV === "production",
-      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : "",
-    }
-    },
+ 
     
   database: prismaAdapter(prisma, {
     provider: "postgresql",

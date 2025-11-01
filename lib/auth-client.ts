@@ -3,6 +3,9 @@
  export const authClient = createAuthClient({
   baseURL: "https://flow-chi-drab.vercel.app",
   plugins: [polarClient()],
-  
+  fetchOptions: {
+    credentials: "include",  
+    
+  },
 
 });

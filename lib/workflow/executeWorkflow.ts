@@ -7,7 +7,7 @@ import TaskRegistry from "./task/registry";
 import { ExecutorRegistry } from "./executor/registry";
 import { Enviroment, ExecutionEnviroment } from "@/app/types/executor";
 import { TaskParamsType } from "@/app/types/task";
-import { Browser, Page } from "puppeteer";
+import { Browser, Page } from "puppeteer-core";
 import { Edge } from "@xyflow/react";
 import { LogCollector } from "@/app/types/log";
 import { createLogCollector } from "../log";

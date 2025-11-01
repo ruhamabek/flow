@@ -44,8 +44,8 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   trustedOrigins: ["http://localhost:3000", 
-    "https://flow-df6qxc5yd-ruhamabeks-projects.vercel.app"],
-  
+    "https://flow-chi-drab.vercel.app/"],
+
   plugins: [
     polar({
       client: polarClient,
@@ -67,7 +67,7 @@ export const auth = betterAuth({
             }
           ],
           successUrl: "/success?checkout_id={CHECKOUT_ID}",
-          returnUrl: "https://flow-lfu3x82uy-ruhamabeks-projects.vercel.app/dashboard/billing",
+          returnUrl: "https://flow-chi-drab.vercel.app/dashboard/billing",
           authenticatedUsersOnly: true,
         }),
 webhooks({

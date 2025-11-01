@@ -21,11 +21,14 @@ export enum TaskParamsType {
     CREDENTIAL = "CREDENTIAL"
 }
 
+ /* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 export interface TaskParam{
     name: string;
     type: TaskParamsType;
     helperText?: string;
     required?: boolean;
     hideHandle?: boolean;
-    [key: string] : unknown;
+    [key: string] : any;
 }

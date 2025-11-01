@@ -1,10 +1,12 @@
 import { Node } from "@xyflow/react"
 import { TaskParam, TaskType } from "./task";
 
+ /* eslint-disable @typescript-eslint/no-explicit-any */
+
 export interface AppNodeData{
       type: TaskType;
       inputs: Record <string, string>;
-      [key: string]: unknown
+      [key: string]: any
 }    
 
 export interface AppNode extends Node{

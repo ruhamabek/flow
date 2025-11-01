@@ -4,6 +4,9 @@ import prisma from "@/lib/prisma";
 import { symmetricDecrypt } from "@/lib/encryption";
 import { GoogleGenAI } from "@google/genai";
 
+ /* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 export async function ExtractElementWithAiExecutor(
   enviroment: ExecutionEnviroment<typeof ExtractDataWithAI>
 ): Promise<boolean> {
@@ -76,7 +79,7 @@ Ensure the output is valid JSON (no markdown formatting) `,
     enviroment.log.info(`Token usage: ${JSON.stringify(tokenUsage.totalTokens)}`);
  
     return true;
-  } catch (error: unknown) {
+  } catch (error: any) {
     if (error instanceof Error) {
       enviroment.log.error(error.message);
       return false;

@@ -56,7 +56,7 @@ export const auth = betterAuth({
             }
           ],
           successUrl: "/success?checkout_id={CHECKOUT_ID}",
-          returnUrl: "http://localhost:3000/dashboard/billing",
+          returnUrl: "https://flow-lfu3x82uy-ruhamabeks-projects.vercel.app/dashboard/billing",
           authenticatedUsersOnly: true,
         }),
 webhooks({

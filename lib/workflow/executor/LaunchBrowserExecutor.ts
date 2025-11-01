@@ -1,32 +1,53 @@
 import { ExecutionEnviroment } from "@/app/types/executor";
 import { LaunchBrowserTask } from "../task/LaunchBrowser";
-import chromium from "chrome-aws-lambda";
-import type { Browser, Page } from "puppeteer-core";
+
+const CHROMIUM_PATH = process.env.CHROMIUM_PATH;
 
 export async function LaunchBrowserExecutor(
-  enviroment: ExecutionEnviroment<typeof LaunchBrowserTask>
+  environment: ExecutionEnviroment<typeof LaunchBrowserTask>
 ): Promise<boolean> {
+      const viewport = {
+    deviceScaleFactor: 1,
+    hasTouch: false,
+    height: 1080,
+    isLandscape: true,
+    isMobile: false,
+    width: 1920,
+  };
   try {
-    const websiteUrl = enviroment.getInput("Website Url");
+    const websiteUrl = environment.getInput("Website Url");
+    let browser: any;
 
-    const browser: Browser = await chromium.puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
-    });
+    if (process.env.VERCEL_ENV === "production") {
+       const chromium = (await import("@sparticuz/chromium-min")).default;
+      const puppeteerCore = (await import("puppeteer-core")).default;
 
-    enviroment.setBrowser(browser);
-    enviroment.log.info("Browser launched successfully");
+       const executablePath = await chromium.executablePath(CHROMIUM_PATH);
 
-    const page: Page = await browser.newPage();
-    await page.goto(websiteUrl);
-    enviroment.setPage(page);
-    enviroment.log.info(`Opened page at: ${websiteUrl}`);
+      browser = await puppeteerCore.launch({
+        args: chromium.args,
+        defaultViewport: viewport,
+        executablePath,
+        headless: true,
+      });
+
+      environment.log.info("Chromium (production) launched successfully");
+    } else {
+       const puppeteer = (await import("puppeteer")).default;
+      browser = await puppeteer.launch({ headless: true });
+      environment.log.info("Puppeteer (local) launched successfully");
+    }
+
+    environment.setBrowser(browser);
+
+     const page = await browser.newPage();
+    await page.goto(websiteUrl, { waitUntil: "domcontentloaded" });
+    environment.setPage(page);
+    environment.log.info(`Opened page at: ${websiteUrl}`);
 
     return true;
   } catch (error) {
-    enviroment.log.error(error instanceof Error ? error.message : String(error));
+    environment.log.error(error instanceof Error ? error.message : String(error));
     return false;
   }
 }

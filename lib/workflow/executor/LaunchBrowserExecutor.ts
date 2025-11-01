@@ -1,6 +1,8 @@
 import { ExecutionEnviroment } from "@/app/types/executor";
 import { LaunchBrowserTask } from "../task/LaunchBrowser";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const CHROMIUM_PATH = process.env.CHROMIUM_PATH;
 
 export async function LaunchBrowserExecutor(

@@ -17,6 +17,7 @@ const polarClient = new Polar({
 }); 
 
 export const auth = betterAuth({ 
+  trustedOrigins: ["http://localhost:3000", "https://flow-df6qxc5yd-ruhamabeks-projects.vercel.app"],
    emailAndPassword: {
         minPasswordLength: 4,
     maxPasswordLength: 128,    
@@ -32,6 +33,7 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     },
     },
+    
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),

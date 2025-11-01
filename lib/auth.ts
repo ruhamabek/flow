@@ -13,11 +13,11 @@ const polarClient = new Polar({
     // Use 'sandbox' if you're using the Polar Sandbox environment
     // Remember that access tokens, products, etc. are completely separated between environments.
     // Access tokens obtained in Production are for instance not usable in the Sandbox environment.
-     server: 'sandbox'
+ 
 }); 
 
 export const auth = betterAuth({ 
-  trustedOrigins: ["http://localhost:3000", "https://flow-df6qxc5yd-ruhamabeks-projects.vercel.app"],
+  
    emailAndPassword: {
         minPasswordLength: 4,
     maxPasswordLength: 128,    
@@ -33,10 +33,19 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     },
     },
+    advanced: {
+           crossSubDomainCookies: {
+      enabled: process.env.NODE_ENV === "production",
+      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : "",
+    }
+    },
     
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  trustedOrigins: ["http://localhost:3000", 
+    "https://flow-df6qxc5yd-ruhamabeks-projects.vercel.app"],
+  
   plugins: [
     polar({
       client: polarClient,

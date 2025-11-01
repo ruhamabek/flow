@@ -3,8 +3,6 @@
  export const authClient = createAuthClient({
   baseURL: "https://flow-lfu3x82uy-ruhamabeks-projects.vercel.app",
   plugins: [polarClient()],
-  fetchOptions: {
-    credentials: "include",  
-  },
+  
 
 });

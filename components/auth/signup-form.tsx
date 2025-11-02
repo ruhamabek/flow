@@ -240,7 +240,7 @@ export function SignupForm({
                       setError(ctx.error.message);
                     },
                   },
-                     callbackURL: `${process.env.BETTER_AUTH_URL}/setup`
+                     callbackURL: "https://flow-chi-drab.vercel.app/setup"
                 });
               }}
               className="group w-full cursor-pointer  space-x-1 py-3 flex transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f_inset]  border-white/10  items-center justify-center border rounded-lg hover:bg-transparent/20 duration-150 active:bg-transparent/50"

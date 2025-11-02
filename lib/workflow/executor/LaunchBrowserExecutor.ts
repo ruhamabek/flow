@@ -3,6 +3,8 @@ import { LaunchBrowserTask } from "../task/LaunchBrowser";
 import { Kernel } from "@onkernel/sdk";
 import { chromium } from "playwright-core";
 
+ /* eslint-disable @typescript-eslint/no-explicit-any */
+
 export async function LaunchBrowserExecutor(
   enviroment: ExecutionEnviroment<typeof LaunchBrowserTask>,
 ): Promise<boolean> {

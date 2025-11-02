@@ -175,6 +175,7 @@ export function SignupForm({
               onClick={async () => {
                 await authClient.signIn.social({
                   provider: "google",
+                  newUserCallbackURL: "/setup",
                   fetchOptions: {
                     onRequest: ( ) => {
                        toast.loading("Authenticating...");
@@ -228,6 +229,7 @@ export function SignupForm({
               onClick={async () => {
                 await authClient.signIn.social({
                   provider: "github",
+                  newUserCallbackURL: "/setup",
                   fetchOptions: {
                     onRequest: ( ) => {
                       

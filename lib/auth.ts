@@ -13,11 +13,35 @@ const polarClient = new Polar({
     // Use 'sandbox' if you're using the Polar Sandbox environment
     // Remember that access tokens, products, etc. are completely separated between environments.
     // Access tokens obtained in Production are for instance not usable in the Sandbox environment.
- 
+   server: "sandbox"
 }); 
 
 export const auth = betterAuth({ 
-  
+  rateLimit: {
+    enabled: true,       
+    window: 10,           
+    max: 100,              
+    customRules: {
+      "/api/signup": {     
+        window: 60,        
+        max: 3            
+      },
+      "/api/login": {      
+        window: 60,        
+        max: 5             
+      },
+       "/api/auth/sign-in/social": {
+        window: 60,
+        max: 10,  
+      },
+       "/api/auth/callback/google": {
+        window: 60,
+        max: 10, 
+       },
+    },
+    storage: "memory",     
+    modelName: "rateLimit" 
+  },
    emailAndPassword: {
         minPasswordLength: 4,
     maxPasswordLength: 128,    
@@ -34,7 +58,6 @@ export const auth = betterAuth({
     },
     },
  
-    
     
   database: prismaAdapter(prisma, {
     provider: "postgresql",
@@ -79,6 +102,8 @@ webhooks({
       ],
     }),
   ],
+
+  
 });
 
  

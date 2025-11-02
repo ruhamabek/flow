@@ -1,0 +1,10 @@
+{
+   
+  "crons": [
+    {
+      "path": "/api/workflows/cron",
+      "schedule": "0 5 * * *"
+    }
+     
+  ]
+}

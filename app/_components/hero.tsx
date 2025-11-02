@@ -31,7 +31,7 @@ export default async function HeroSection() {
             <Line className="w-px bg-zinc-700/30  right-2 sm:right-4 md:right-6 h-full inset-y-0" />
             <Line className="w-px bg-zinc-700/30  left-2 sm:left-4 md:left-6 h-full inset-y-0" />
             <h1 className="text-4xl dark:from-zinc-400/10 dark:via-white/90 dark:to-white/20  bg-gradient-to-tr  from-black/70 via-black to-black/60 bg-clip-text text-transparent tracking-tighter md:text-5xl lg:text-6xl font-bold text-center ">
-             The Web&apos;s Secrets, Served Simply.
+            Streamline Web Data Extraction with Flow
             </h1>
           </div>
           <p className="text-zinc-600 dark:text-zinc-400 tracking-tight text-center max-w-2xl mb-10">

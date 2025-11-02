@@ -7,10 +7,11 @@ import TaskRegistry from "./task/registry";
 import { ExecutorRegistry } from "./executor/registry";
 import { Enviroment, ExecutionEnviroment } from "@/app/types/executor";
 import { TaskParamsType } from "@/app/types/task";
-import { Browser, Page } from "puppeteer";
+import { Browser, Page } from "playwright-core";
 import { Edge } from "@xyflow/react";
 import { LogCollector } from "@/app/types/log";
 import { createLogCollector } from "../log";
+import Kernel from "@onkernel/sdk";
 export async function ExecuteWorkflow(executionId: string, nextRunAt?: Date)  {
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -219,11 +220,21 @@ function createExecutionEnviroment(node: AppNode , enviroment: Enviroment, logCo
         log: logCollector
     }
 }
+ 
 
-async function cleanupEnviroment(enviroment: Enviroment){ 
-    if(enviroment.browser){
-        await enviroment.browser.close().catch((err) => console.error("Cannot close browser because of: " , err));
+async function cleanupEnviroment(enviroment: Enviroment) {
+  try {
+    if (enviroment.browser) {
+      await enviroment.browser.close();
     }
+
+    if (enviroment.kernelSessionId) {
+      const kernel = new Kernel({ apiKey: process.env.KERNEL_API_KEY! });
+      await kernel.browsers.deleteByID(enviroment.kernelSessionId);
+     }
+  } catch (err) {
+    console.error("Cannot clean up environment:", err);
+  }
 }
 
 async function decrementCredits(userId: string, amount: number, logCollector: LogCollector){

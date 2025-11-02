@@ -8,6 +8,7 @@ export async function WaitForElementExecutor(
           const selector = enviroment.getInput("Selector");
           if(!selector){
             enviroment.log.error("input->selector not defined");
+            return false;
           }
 
           const visibility = enviroment.getInput("Visibility");
@@ -15,10 +16,14 @@ export async function WaitForElementExecutor(
           if(!visibility){
             enviroment.log.error("input->visibility not defined");
           }
-            await enviroment.getPage()!.waitForSelector(selector , {
-              visible: visibility === "visible",
-              hidden: visibility === "hidden"
-            });
+
+         
+          const state = visibility === "visible" ? "visible"
+                        : visibility === "hidden" ? "hidden"
+                        : undefined;
+
+            const page = enviroment.getPage()!;
+            await page.waitForSelector(selector, state ? { state } : {});
             enviroment.log.info(`Element ${selector} became: ${visibility}`)
             return true;
 

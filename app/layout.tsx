@@ -1,4 +1,3 @@
- import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
@@ -14,15 +13,7 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-export const metadata: Metadata = {
-  title: "Flow",
-  description: "Automate web scraping",
-  icons: {
-    icon: "/flow.png",
-  },
-};
-
+ 
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,6 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+     <head>
+         <title>Flow</title>
+         <link rel="icon" type="image/png"  href="/flow.png" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryProvider>
           <NextTopLoader color="#3b82f6" showSpinner={false} />

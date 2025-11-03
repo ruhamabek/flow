@@ -73,8 +73,7 @@ export function NavUser({ user }: { user: Partial<User> }) {
             <DropdownMenuSeparator />
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              {/* <IconLogout /> */}
-              <LogoutButton />
+               <LogoutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

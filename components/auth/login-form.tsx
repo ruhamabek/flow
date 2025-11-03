@@ -18,8 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useRouter } from "next/navigation";
-
+ 
 import { authClient } from "@/lib/auth-client";
 import { Loader2Icon, Terminal } from "lucide-react";
  
@@ -37,8 +36,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const router = useRouter();
- 
+  
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

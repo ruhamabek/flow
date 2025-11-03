@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Flow",
   description: "Automate web scraping",
+  icons: {
+    icon: "/flow.png",
+  },
 };
 
 export default function RootLayout({
@@ -31,8 +34,10 @@ export default function RootLayout({
         <QueryProvider>
           <NextTopLoader color="#3b82f6" showSpinner={false} />
           <ThemeProvider
+            enableColorScheme 
+            themes={['light', 'dark', 'system']}
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >

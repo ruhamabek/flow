@@ -1,25 +1,27 @@
 "use client";
+
 import * as React from "react";
-import {  
+import {
   IconDashboard,
-  IconInnerShadowTop,
-   IconCreditCard,
+  IconCreditCard,
   IconShieldCheck,
-  IconLayersIntersect
+  IconLayersIntersect,
 } from "@tabler/icons-react";
 
- import { NavMain } from "@/components/nav-main";
- import { NavUser } from "@/components/nav-user";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-   SidebarMenuItem,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { User } from "@prisma/client";
- import Link from "next/link";
+import Link from "next/link";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 const data = {
   navMain: [
@@ -44,9 +46,6 @@ const data = {
       icon: IconCreditCard,
     },
   ],
-
- 
- 
   documents: [],
 };
 
@@ -55,26 +54,42 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
-   
   if (!user) {
     throw new Error("AppSidebar requires a user but received undefined.");
   }
+
+  const { theme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
+  if (!mounted) return null; // Wait until mounted to prevent flicker
+
+  const logoSrc =
+    theme === "dark" ? "/flowdash-nobg.png" : "/flowdashwhite-nobg.png";
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem className="flex items-center gap-1">   
-            <Link href={"/"} className="flex items-center gap-2">
-                 <IconInnerShadowTop className="!size-8" />
-                <span className="text-3xl font-semibold">Flow</span>
-              </Link>                     
+          <SidebarMenuItem className="flex items-center gap-1">
+            <Link href="/" className="flex items-center gap-2">
+              <Image
+                src={logoSrc}
+                alt="Flow Logo"
+                width={100}
+                height={60}
+                className="rounded-md -mt-3"
+                priority
+              />
+            </Link>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {/* <NavDocuments items={data.documents} /> */}
-       </SidebarContent>
+      </SidebarContent>
+
       <SidebarFooter>
         <NavUser user={user} />
       </SidebarFooter>

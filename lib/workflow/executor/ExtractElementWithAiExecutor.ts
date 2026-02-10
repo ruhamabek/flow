@@ -38,7 +38,7 @@ export async function ExtractElementWithAiExecutor(
     const ai = new GoogleGenAI({ apiKey: plainCredentialValue });
 
      const chat = ai.chats.create({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash",
       history: [
         {
           role: "model",
@@ -72,7 +72,7 @@ Ensure the output is valid JSON (no markdown formatting) `,
      enviroment.setOutput("Extracted data", cleanResultText!);
 
      const tokenUsage = await ai.models.countTokens({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash",
       contents: chat.getHistory(),
     });
 
